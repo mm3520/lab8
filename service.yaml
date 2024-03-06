@@ -4,9 +4,9 @@ metadata:
   name: flask-tutorial
 spec:
   ports:
-  - port: 8000
+  - port: 5000
     protocol: TCP
-    targetPort: 8000
+    targetPort: 5000
   selector:
     app: flask-tutorial
   type: LoadBalancer
