@@ -22,5 +22,5 @@ spec:
           image: registry.digitalocean.com/flask-tutorial-registry/flask-tutorial:1.0.0
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8000
+            - containerPort: 5000
 
