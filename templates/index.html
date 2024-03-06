@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluetooth Data Graph</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div id="liveGraph"></div>
+    <script>
+        var data = {
+            x: [],
+            y: [],
+            type: 'scatter',
+            mode: 'lines+points',
+            marker: {color: 'red'}
+        };
+
+        var layout = {
+            title: 'Live Bluetooth Data Graph',
+            xaxis: {title: 'Time'},
+            yaxis: {title: 'Value'},
+            showlegend: false
+        };
+
+        var graph = Plotly.newPlot('liveGraph', [data], layout);
+
+        function fetchData() {
+            fetch('/get_gamma_data')
+                .then(response => response.json())
+                .then(data => {
+                    var time = new Date(data.timestamp * 1000);
+                    var formattedTime = time.toLocaleTimeString();
+                    Plotly.extendTraces('liveGraph', {x: [[formattedTime]], y: [[data.value]]}, [0]);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        setInterval(fetchData, 1000); 
+    </script>
+</body>
+</html>
